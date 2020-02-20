@@ -20,7 +20,7 @@ const LoginController = require("./controllers/login");
 // -- Login
 app.group("/api/v1", router => {
   //strukturing folder
-  router.get("/login", LoginController.index);
+  router.post("/login", LoginController.index);
 });
 
 // app.group("/api/v1", router => { //using group routes
