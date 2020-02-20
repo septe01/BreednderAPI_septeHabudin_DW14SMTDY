@@ -15,6 +15,18 @@ module.exports = (sequelize, DataTypes) => {
   );
   pet.associate = function(models) {
     // associations can be defined here
+    // Order.belongsTo(models.user, {
+    //   foreignKey: "user_id",
+    //   sourceKey: "id"
+    // });
+    // Order.belongsTo(models.spesies, {
+    //   foreignKey: "spesies_id",
+    //   sourceKey: "id"
+    // });
+    // Order.belongsTo(models.age, {
+    //   foreignKey: "age_id",
+    //   sourceKey: "id"
+    // });
   };
   return pet;
 };
