@@ -29,10 +29,10 @@ app.group("/api/v1", router => {
 //   });
 // });
 
-// create the homepage route
-app.get("/", (req, res) => {
-  //create route endpoind
-  res.send("hallo septehabudin");
-});
+// --- create the homepage route
+// app.get("/", (req, res) => {
+//   //create route endpoind
+//   res.send("hallo septehabudin");
+// });
 
 app.listen(port);
