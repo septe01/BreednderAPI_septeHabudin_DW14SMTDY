@@ -22,7 +22,7 @@ module.exports = {
       },
       photo: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       user_id: {
         type: Sequelize.INTEGER,

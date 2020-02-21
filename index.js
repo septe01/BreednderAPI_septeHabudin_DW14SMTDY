@@ -15,12 +15,14 @@ app.use(bodyParser.json());
 
 // import controller
 const LoginController = require("./controllers/login");
+const RegistrasiController = require("./controllers/register/register");
 
 // -- create groups routes
-// -- Login
+// -- Endpoint
 app.group("/api/v1", router => {
   //strukturing folder
   router.post("/login", LoginController.index);
+  router.post("/register", RegistrasiController.index);
 });
 
 // app.group("/api/v1", router => { //using group routes
