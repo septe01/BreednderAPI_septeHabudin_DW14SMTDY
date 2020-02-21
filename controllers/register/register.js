@@ -3,7 +3,7 @@ const model = require("../../models");
 const User = model.user;
 const Pet = model.pet;
 
-exports.index = async (req, res) => {
+exports.store = async (req, res) => {
   try {
     const { breeder, email, password, phone, address } = req.body;
     const { name, gender, about_pet } = req.body.pet;

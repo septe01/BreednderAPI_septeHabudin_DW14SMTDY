@@ -16,13 +16,16 @@ app.use(bodyParser.json());
 // import controller
 const LoginController = require("./controllers/login");
 const RegistrasiController = require("./controllers/register/register");
+const SpeciesController = require("./controllers/species/spesies");
 
 // -- create groups routes
 // -- Endpoint
 app.group("/api/v1", router => {
   //strukturing folder
-  router.post("/login", LoginController.index);
-  router.post("/register", RegistrasiController.index);
+  router.post("/login", LoginController.store);
+  router.post("/register", RegistrasiController.store);
+  router.post("/species", SpeciesController.store);
+  router.get("/species", SpeciesController.index);
 });
 
 // app.group("/api/v1", router => { //using group routes
