@@ -32,9 +32,12 @@ app.group("/api/v1", router => {
   //strukturing folder
   router.post("/login", LoginController.store);
   router.post("/register", RegistrasiController.store);
+  // species
   router.post("/species", SpeciesController.store);
   router.get("/species", SpeciesController.index);
+  //pet
   router.get("/pet", PetController.index);
+  router.get("/pet/:id", PetController.show);
   router.post("/pet", PetController.store);
   router.patch("/pet/:id", PetController.update);
   router.delete("/pet/:id", PetController.destroy);

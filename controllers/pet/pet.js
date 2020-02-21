@@ -118,3 +118,31 @@ exports.destroy = (req, res) => {
   });
 };
 // --- end delete pet
+
+// --- detail pet
+exports.show = (req, res) => {
+  const id = req.params.id;
+  Pet.findOne({
+    where: { id },
+    include: [
+      { model: Spesies, attributes: ["id", "name"] },
+      { model: Age, attributes: ["id", "name"] },
+      { model: User, attributes: ["id", "breeder", "address", "phone"] }
+    ]
+  }).then(result => {
+    if (result) {
+      res.status(200).send({
+        status: 200,
+        message: "seccess",
+        result
+      });
+    } else {
+      res.status(404).send({
+        status: 404,
+        message: "not found",
+        id
+      });
+    }
+  });
+};
+// !--- end detail pet

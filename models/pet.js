@@ -24,9 +24,6 @@ module.exports = (sequelize, DataTypes) => {
     pet.belongsTo(models.age, {
       foreignKey: "age_id"
     });
-    // "user_id": 1,
-    //     "spesies_id": 3,
-    //     "age_id": 1,
   };
   return pet;
 };
