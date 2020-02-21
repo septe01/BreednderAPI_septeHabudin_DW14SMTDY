@@ -25,6 +25,7 @@ const LoginController = require("./controllers/login");
 const RegistrasiController = require("./controllers/register/register");
 const SpeciesController = require("./controllers/species/spesies");
 const PetController = require("./controllers/pet/pet");
+const UserController = require("./controllers/user/user");
 
 // -- create groups routes
 // -- Endpoint
@@ -32,6 +33,10 @@ app.group("/api/v1", router => {
   //strukturing folder
   router.post("/login", LoginController.store);
   router.post("/register", RegistrasiController.store);
+  // user
+  router.get("/user/:id", UserController.show);
+  router.patch("/user/:id", UserController.update);
+  router.delete("/user/:id", UserController.destroy);
   // species
   router.post("/species", SpeciesController.store);
   router.get("/species", SpeciesController.index);
