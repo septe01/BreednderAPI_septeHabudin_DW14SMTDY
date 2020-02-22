@@ -35,13 +35,13 @@ exports.show = (req, res) => {
 
 // --- update data
 exports.update = (req, res) => {
-  const userId = req.params.id; //get id user
-  const email = req.body.email;
-  User.findOne({ where: { email } }).then(result => {
-    if (result == null) {
-      User.update(req.body, { where: { id: userId } }).then(result => {
+  const id = req.params.id; //get id user
+  // const email = req.body.email;
+  User.findOne({ where: { id } }).then(result => {
+    if (result) {
+      User.update(req.body, { where: { id: id } }).then(result => {
         if (result) {
-          User.findOne({ where: { id: userId } }).then(result => {
+          User.findOne({ where: { id: id } }).then(result => {
             res.status(200).send({
               status: 200,
               message: "success",
@@ -56,10 +56,10 @@ exports.update = (req, res) => {
         }
       });
     } else {
-      res.status(201).send({
-        status: 201,
-        userId,
-        message: "email is already in use"
+      res.status(404).send({
+        status: 404,
+        id,
+        message: "not found"
       });
     }
   });

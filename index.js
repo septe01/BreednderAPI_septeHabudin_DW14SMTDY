@@ -23,6 +23,7 @@ const RegistrasiController = require("./controllers/register/register");
 const SpeciesController = require("./controllers/species/spesies");
 const PetController = require("./controllers/pet/pet");
 const UserController = require("./controllers/user/user");
+const PaymentController = require("./controllers/payment/payment");
 
 // -- create groups routes
 // -- Endpoint
@@ -43,6 +44,8 @@ app.group("/api/v1", router => {
   router.post("/pet", authenticated, PetController.store);
   router.patch("/pet/:id", authenticated, PetController.update);
   router.delete("/pet/:id", authenticated, PetController.destroy);
+  //payme
+  router.post("/payment", authenticated, PaymentController.store);
 });
 
 // app.group("/api/v1", router => { //using group routes
