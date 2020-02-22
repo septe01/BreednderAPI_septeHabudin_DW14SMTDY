@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const model = require("../../models");
 const Pet = model.pet;
 const User = model.user;
@@ -6,7 +7,6 @@ const Age = model.age;
 
 // --- add pet
 exports.store = (req, res) => {
-  // const token = req.headers.authorization;
   const userId = req.body.user.id;
   const spesiesId = req.body.spesies.id;
   const ageId = req.body.age.id;
@@ -19,7 +19,11 @@ exports.store = (req, res) => {
     spesies_id: spesiesId,
     age_id: ageId
   };
-  Pet.create(data).then(resPet => {
+
+  // res.send(data);
+
+  Pet.create(data).then(result => {
+    res.send(result);
     User.findOne({ where: { id: userId } }).then(userData => {
       Spesies.findOne({ where: { id: spesiesId } }).then(spesiesData => {
         Age.findOne({ where: { id: ageId } }).then(ageData => {
@@ -76,9 +80,8 @@ exports.index = (req, res) => {
 
 // --- update pet
 exports.update = (req, res) => {
-  // const token = req.headers.authorization;
   const id = req.params.id;
-  Pet.update(req.body, { where: { id } }).then(dataPet => {
+  Pet.update(req.body, { where: { id: id } }).then(dataPet => {
     Pet.findOne({
       where: { id: id },
       include: [
@@ -103,17 +106,18 @@ exports.update = (req, res) => {
 
 // --- delete pet
 exports.destroy = (req, res) => {
-  // const token = req.headers.authorization;
   const id = req.params.id;
-  Pet.destroy({ where: { id } }).then(result => {
+  Pet.destroy({ where: { id: id } }).then(result => {
     if (result) {
       res.status(200).send({
         message: "success",
         data: result
       });
     } else {
-      // const data = await Pet.findAll();
-      res.status(404).send({ status: "404", message: "not found" });
+      res.status(401).send({
+        error: true,
+        message: "Delete authorized"
+      });
     }
   });
 };

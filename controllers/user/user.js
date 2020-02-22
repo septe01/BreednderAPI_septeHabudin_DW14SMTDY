@@ -4,9 +4,9 @@ const User = model.user;
 // --- get data by id
 exports.show = (req, res) => {
   // const token = req.headers.authorization;
-  const id = req.params.id;
+  const userId = req.params.id; //get id user
   User.findOne({
-    where: { id },
+    where: { id: userId },
     attributes: [
       "breeder",
       "email",
@@ -33,16 +33,15 @@ exports.show = (req, res) => {
 };
 // --- end get data by id
 
-// --- update data user
+// --- update data
 exports.update = (req, res) => {
-  // const token = req.headers.authorization;
-  const id = req.params.id;
+  const userId = req.params.id; //get id user
   const email = req.body.email;
   User.findOne({ where: { email } }).then(result => {
     if (result == null) {
-      User.update(req.body, { where: { id } }).then(result => {
+      User.update(req.body, { where: { id: userId } }).then(result => {
         if (result) {
-          User.findOne({ where: { id } }).then(result => {
+          User.findOne({ where: { id: userId } }).then(result => {
             res.status(200).send({
               status: 200,
               message: "success",
@@ -59,7 +58,7 @@ exports.update = (req, res) => {
     } else {
       res.status(201).send({
         status: 201,
-        id,
+        userId,
         message: "email is already in use"
       });
     }

@@ -5,10 +5,7 @@ const bodyParser = require("body-parser");
 require("express-group-routes");
 
 // -- authenticated
-const expressJwt = require("express-jwt");
-const authenticated = expressJwt({
-  secret: "my-secret-key"
-});
+const { authenticated } = require("./middleware/auth");
 // -- end authenticated
 
 // use express in app variable
@@ -34,8 +31,8 @@ app.group("/api/v1", router => {
   router.post("/login", LoginController.store);
   router.post("/register", RegistrasiController.store);
   // user
-  router.get("/user/:id", UserController.show);
-  router.patch("/user/:id", UserController.update);
+  router.get("/user/:id", authenticated, UserController.show);
+  router.patch("/user/:id", authenticated, UserController.update);
   router.delete("/user/:id", UserController.destroy);
   // species
   router.post("/species", SpeciesController.store);
@@ -43,9 +40,9 @@ app.group("/api/v1", router => {
   //pet
   router.get("/pet", PetController.index);
   router.get("/pet/:id", PetController.show);
-  router.post("/pet", PetController.store);
-  router.patch("/pet/:id", PetController.update);
-  router.delete("/pet/:id", PetController.destroy);
+  router.post("/pet", authenticated, PetController.store);
+  router.patch("/pet/:id", authenticated, PetController.update);
+  router.delete("/pet/:id", authenticated, PetController.destroy);
 });
 
 // app.group("/api/v1", router => { //using group routes
@@ -55,9 +52,9 @@ app.group("/api/v1", router => {
 // });
 
 // --- create the homepage route
-// app.get("/", (req, res) => {
-//   //create route endpoind
-//   res.send("hallo septehabudin");
-// });
+app.get("/", (req, res) => {
+  //create route endpoind
+  res.send(authenticated);
+});
 
 app.listen(port);
