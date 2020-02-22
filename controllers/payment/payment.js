@@ -1,8 +1,18 @@
 const Payment = require("../../models").payment;
+const jwtDecode = require("jwt-decode");
 
 exports.store = async (req, res) => {
-  res.send(req.headers.authorization);
-  res.send(req.body);
+  // res.send(req.headers.authorization);
+  const decoded = jwtDecode(req.headers.authorization).userId;
+  const data = {
+    no_rek: req.body.no_rek,
+    proof_of_transfer: req.body.proof_of_transfer,
+    user_id: decoded
+  };
+
+  const insertData = await Payment.create(data);
+
+  res.send(insertData);
 };
 
 // {
