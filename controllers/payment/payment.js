@@ -49,65 +49,33 @@ exports.store = (req, res) => {
 //  !--- end Store data Paymnt
 
 //  --- Update data Paymnt
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
   const token = req.headers.authorization;
   const idUser = jwtDecode(token);
   const idPayment = req.params.id;
 
-  // const token = req.headers.authorization;
-  // var decoded = jwtDecode(token);
-  res.send(idUser);
-  // User.findOne({
-  //   where: { id: idUser.userId }
-  // }).then(result => {
-  //   res.send(result);
-  //   if (result) {
-  //     res.status(200).send({
-  //       status: 200,
-  //       message: "access success"
-  //     });
-  //   } else {
-  //     res.status(403).send({
-  //       status: 403,
-  //       message: "access denied"
-  //     });
-  //   }
-  //   res.send(idPayment);
-  // });
+  const userData = await User.findOne({ where: { id: idUser.userId } });
+  if (userData.role == "admin") {
+    // if user admin can be modify status
+    Payment.update(req.body, { where: { id: idPayment } }).then(result => {
+      if (result > 0) {
+        Payment.findOne({
+          where: { id: idPayment },
+          attributes: ["no_rek", "proof_of_transfer", "status"],
+          include: {
+            model: User
+          }
+        }).then(result => {
+          res.status(200).send(result);
+        });
+      } else {
+        res.status(404).send({
+          status: 404,
+          message: "not found"
+        });
+      }
+    });
+  } else {
+    res.send("not admin");
+  }
 };
-// >**url** = {your_host}/api/v1/payment/{payment_id}
-// **method** = PUT
-// **request header** =
-
-// >```json
-// {
-//   "Authorization" : "Bearer {token}"
-// }
-// ```
-
-// >**request body** =
-
-// >```json
-// {
-//   "no_rek": 1021691010,
-//   "proof_of_transfer": "https://buktitransfer.jpg",
-//   "status": "premium"
-// }
-// ```
-
-// >**response body** =
-
-// >```json
-// {
-//   "no_rek": 1021691010,
-//   "proof_of_transfer": "https://buktitransfer.jpg",
-//   "users": {
-//     "id": 1,
-//     "name": "Spiderman",
-//     "address": "Permata Bintaro Residence",
-//     "phone": "083896831233",
-//     "createdAt": "12-12-2019",
-//     "updatedAt": "12-12-2019"
-//   },
-//   "status": "premium"
-// }
