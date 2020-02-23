@@ -20,8 +20,6 @@ exports.store = (req, res) => {
     age_id: ageId
   };
 
-  // res.send(data);
-
   Pet.create(data).then(result => {
     res.send(result);
     User.findOne({ where: { id: userId } }).then(userData => {
