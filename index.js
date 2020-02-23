@@ -24,6 +24,7 @@ const SpeciesController = require("./controllers/species/spesies");
 const PetController = require("./controllers/pet/pet");
 const UserController = require("./controllers/user/user");
 const PaymentController = require("./controllers/payment/payment");
+const MatchController = require("./controllers/match/match");
 
 // -- create groups routes
 // -- Endpoint
@@ -50,6 +51,8 @@ app.group("/api/v1", router => {
   router.post("/payment", authenticated, PaymentController.store);
   router.get("/payment/:id", authenticated, PaymentController.show);
   router.patch("/payment/:id", authenticated, PaymentController.update);
+  //match
+  router.get("/match", authenticated, MatchController.show);
 });
 
 // app.group("/api/v1", router => { //using group routes

@@ -13,7 +13,9 @@ module.exports = {
         allowNull: false
       },
       gender: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM({
+          values: ["male", "female"]
+        }),
         allowNull: false
       },
       about_pet: {

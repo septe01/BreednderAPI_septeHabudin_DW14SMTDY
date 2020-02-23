@@ -18,8 +18,8 @@ module.exports = {
         {
           no_rek: "2412412442",
           proof_of_transfer: "i.imgur.com/Iqlugn5.jpg",
-          status: 0,
-          user_id: 1,
+          status: "free",
+          user_id: 2,
           createdAt: "0000-00-00",
           updatedAt: "0000-00-00"
         }

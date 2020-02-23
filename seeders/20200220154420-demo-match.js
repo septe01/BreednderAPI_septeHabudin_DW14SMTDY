@@ -23,9 +23,9 @@ module.exports = {
           updatedAt: "0000-00-00"
         },
         {
-          pet_id: 2,
+          pet_id: 1,
           pet_id_liked: 2,
-          status: true,
+          status: false,
           createdAt: "0000-00-00",
           updatedAt: "0000-00-00"
         }
