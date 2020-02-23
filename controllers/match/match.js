@@ -57,78 +57,169 @@ exports.show = async (req, res) => {
 };
 // !--- show data match
 
-// ### 2. Logic, Create and Update Match
+// --- Create data match
+exports.store = async (req, res) => {
+  try {
+    const { pet_id, pet_id_liked } = req.body;
+    if (pet_id != "" && pet_id_liked != "") {
+      const storePet = await Match.create(req.body);
+      if (storePet) {
+        const pet = await Pet.findOne({
+          where: { id: storePet.pet_id },
+          attributes: ["id", "name", "gender", "about_pet", "photo"],
+          include: [
+            { model: Spesies, attributes: ["id", "name"] },
+            { model: Age, attributes: ["name"] },
+            { model: User, attributes: ["id", "breeder", "address", "phone"] }
+          ]
+        });
+        const pet_liked = await Pet.findOne({
+          where: { id: storePet.pet_id_liked },
+          attributes: ["id", "name", "gender", "about_pet", "photo"],
+          include: [
+            { model: Spesies, attributes: ["id", "name"] },
+            { model: Age, attributes: ["name"] },
+            { model: User, attributes: ["id", "breeder", "address", "phone"] }
+          ]
+        });
+        res.status(200).send({
+          status: 200,
+          message: "success",
+          data: {
+            id: storePet.id,
+            status: storePet.status,
+            pet,
+            pet_liked,
+            createdAt: storePet.createdAt,
+            updatedAt: storePet.updatedAt
+          }
+        });
+      } else {
+        res.status(404).send({
+          status: 404,
+          message: "not found",
+          id
+        });
+      }
+    }
+  } catch (error) {
+    res.status(400).send({
+      status: 400,
+      message: "bad request"
+    });
+  }
+};
+// !--- Create data match
 
-// > #### Logic Provisions
-// 1. If process **Check Match** give a _response empty or 204_, then create match with the value pet_id is your pet, pet_id_liked is the pet that you like, and status is false.
-// 2. If process **Check Match** give a _response object with status is false_, then update status to true, and create match with the value status is true too.
-// 3. If process **Check Match** give a _response object with status is true_, then do nothing
+// --- Update data match
+exports.update = async (req, res) => {
+  try {
+    const matchId = req.params.id;
+    const result = await Match.update(req.body, { where: { id: matchId } });
+    if (result) {
+      const resultMatch = await Match.findOne({
+        where: { id: matchId }
+      });
 
-// > #### Create Match
+      const pet = await Pet.findOne({
+        where: { id: resultMatch.pet_id },
+        attributes: ["id", "name", "gender", "about_pet", "photo"],
+        include: [
+          { model: Spesies, attributes: ["id", "name"] },
+          { model: Age, attributes: ["name"] },
+          { model: User, attributes: ["id", "breeder", "address", "phone"] }
+        ]
+      });
+      const pet_liked = await Pet.findOne({
+        where: { id: resultMatch.pet_id_liked },
+        attributes: ["id", "name", "gender", "about_pet", "photo"],
+        include: [
+          { model: Spesies, attributes: ["id", "name"] },
+          { model: Age, attributes: ["name"] },
+          { model: User, attributes: ["id", "breeder", "address", "phone"] }
+        ]
+      });
+      res.status(200).send({
+        status: 200,
+        message: "success",
+        data: {
+          id: resultMatch.id,
+          status: resultMatch.status,
+          pet,
+          pet_liked,
+          createdAt: resultMatch.createdAt,
+          updatedAt: resultMatch.updatedAt
+        }
+      });
+    } else {
+      res.status(204).send({
+        status: 204,
+        message: "no content"
+      });
+    }
+  } catch (error) {
+    res.status(400).send({
+      status: 400,
+      message: "bad request"
+    });
+  }
+};
+// !--- end Update data match
 
-// >>**url** = {your_host}/api/v1/match
-// **method** = POST
-// **request header** =
+//  --- data match by pet_id and status true
+exports.matchTrue = async (req, res) => {
+  try {
+    const { pet_id, status } = req.query;
+    const match = await Match.findAll({
+      where: { pet_id: pet_id, status: status }
+    });
 
-// >>```json
-// {
-//   "Authorization" : "Bearer {Token}"
-// }
-// ```
+    const pet = await Pet.findOne({
+      where: { id: pet_id },
+      attributes: ["id", "name", "gender", "about_pet", "photo"],
+      include: [
+        { model: Spesies, attributes: ["id", "name"] },
+        { model: Age, attributes: ["name"] },
+        { model: User, attributes: ["id", "breeder", "address", "phone"] }
+      ]
+    });
 
-// >>**request body** =
+    const pet_liked = [];
+    for (let i = 0; i < match.length; i++) {
+      const liked = await Pet.findOne({
+        where: { id: match[i].pet_id_liked },
+        attributes: ["id", "name", "gender", "about_pet", "photo"],
+        include: [
+          { model: Spesies, attributes: ["id", "name"] },
+          { model: Age, attributes: ["name"] },
+          { model: User, attributes: ["id", "breeder", "address", "phone"] }
+        ]
+      });
+      pet_liked.push(liked);
+    }
 
-// >>```json
-// {
-//   "pet_id" : "1",
-//   "pet_id_liked" : "2",
-//   "status" : false
-// }
-// ```
+    const petMatch = [];
+    match.map((e, i) => {
+      data = {
+        status: 200,
+        message: "success",
+        data: {
+          id: e.id,
+          status: e.status,
+          pet,
+          pet_liked,
+          createdAt: e.createdAt,
+          updatedAt: e.updatedAt
+        }
+      };
+      petMatch.push(data);
+    });
 
-// >>**response body** =
-
-// >>```json
-// {
-//   "id": "30",
-//   "status" : false,
-//   "pet": {
-//     "id": "1",
-//     "name": "Jon Snow",
-//     "gender": "Male",
-//     "spesies": {
-//       "id": 1,
-//       "name": "dog"
-//     },
-//     "age": "Adult",
-//     "user": {
-//       "id": 2,
-//       "name": "Spiderman",
-//       "address": "Permata Bintaro Residence",
-//       "Phone": "083896831233"
-//     },
-//     "about_pet": "Pet ini sangat indah sekali dan ganteng sekali",
-//     "photo": "https://dog.jpg",
-//   },
-//   "pet_liked": {
-//     "id": "2",
-//     "name": "Jon o",
-//     "gender": "Female",
-//     "spesies": {
-//       "id": 1,
-//       "name": "dog"
-//     },
-//     "age": "Adult",
-//     "user": {
-//       "id": "3",
-//       "name": "Spiderman",
-//       "address": "Permata Bintaro Residence",
-//       "Phone": "083896831233"
-//     },
-//     "about_pet": "Pet ini sangat indah sekali dan ganteng sekali",
-//     "photo": "https://dog.jpg",
-//   },
-//   "createdAt": "12-12-2019",
-//   "updatedAt": "12-12-2019"
-// }
-// ```
+    res.status(200).send(petMatch); //sen response
+  } catch (error) {
+    res.status(400).send({
+      status: 400,
+      message: "bad request"
+    });
+  }
+};

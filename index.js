@@ -52,7 +52,10 @@ app.group("/api/v1", router => {
   router.get("/payment/:id", authenticated, PaymentController.show);
   router.patch("/payment/:id", authenticated, PaymentController.update);
   //match
+  router.get("/match", authenticated, MatchController.matchTrue);
   router.get("/match", authenticated, MatchController.show);
+  router.post("/match", authenticated, MatchController.store);
+  router.patch("/match/:id", authenticated, MatchController.update);
 });
 
 // app.group("/api/v1", router => { //using group routes
