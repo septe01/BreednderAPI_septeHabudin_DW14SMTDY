@@ -32,6 +32,7 @@ app.group("/api/v1", router => {
   router.post("/login", LoginController.store);
   router.post("/register", RegistrasiController.store);
   // user
+  router.get("/user", authenticated, UserController.index);
   router.get("/user/:id", authenticated, UserController.show);
   router.patch("/user/:id", authenticated, UserController.update);
   router.delete("/user/:id", UserController.destroy);

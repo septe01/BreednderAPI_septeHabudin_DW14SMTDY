@@ -132,7 +132,23 @@ exports.show = async (req, res) => {
 exports.index = async (req, res) => {
   try {
     const result = await Payment.findAll();
-    res.send(result);
-  } catch (error) {}
+    if (result) {
+      res.status(200).send({
+        status: 200,
+        message: "success",
+        result
+      });
+    } else {
+      res.status(404).send({
+        status: 404,
+        message: "not found"
+      });
+    }
+  } catch (error) {
+    res.status(400).send({
+      status: 400,
+      message: "bad request"
+    });
+  }
 };
 //  !--- end show all data Paymnt

@@ -31,7 +31,7 @@ exports.show = (req, res) => {
     }
   });
 };
-// --- end get data by id
+// !--- end get data by id
 
 // --- update data
 exports.update = (req, res) => {
@@ -64,8 +64,7 @@ exports.update = (req, res) => {
     }
   });
 };
-
-// --- end update data user
+// !--- end update data user
 
 // --- delete data user
 exports.destroy = (req, res) => {
@@ -86,4 +85,29 @@ exports.destroy = (req, res) => {
     }
   });
 };
-// --- end delete data user
+// !--- end delete data user
+
+// --- get all user
+exports.index = async (req, res) => {
+  try {
+    const result = await User.findAll();
+    if (result) {
+      res.status(200).send({
+        status: 200,
+        message: "success",
+        result
+      });
+    } else {
+      res.status(404).send({
+        status: 404,
+        message: "not found"
+      });
+    }
+  } catch (error) {
+    res.status().send({
+      status: 400,
+      message: "bad request"
+    });
+  }
+};
+// --- get all user
