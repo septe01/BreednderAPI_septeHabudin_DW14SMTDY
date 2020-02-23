@@ -5,6 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       no_rek: DataTypes.STRING,
       proof_of_transfer: DataTypes.STRING,
+      status: DataTypes.ENUM({
+        values: ["free", "premium"]
+      }),
       user_id: DataTypes.INTEGER
     },
     {}

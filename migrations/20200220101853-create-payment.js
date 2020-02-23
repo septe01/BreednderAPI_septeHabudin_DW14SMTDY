@@ -10,10 +10,13 @@ module.exports = {
       },
       no_rek: {
         type: Sequelize.STRING,
-        unique: true,
         allowNull: false
       },
       proof_of_transfer: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      status: {
         type: Sequelize.STRING,
         allowNull: false
       },

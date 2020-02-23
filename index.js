@@ -46,6 +46,7 @@ app.group("/api/v1", router => {
   router.delete("/pet/:id", authenticated, PetController.destroy);
   //payme
   router.post("/payment", authenticated, PaymentController.store);
+  router.patch("/payment/:id", authenticated, PaymentController.update);
 });
 
 // app.group("/api/v1", router => { //using group routes
