@@ -58,6 +58,7 @@ exports.update = async (req, res) => {
 
     const userData = await User.findOne({ where: { id: idUser.userId } });
     if (userData.role == "admin") {
+      // res.send(userData);
       // if user admin can be modify status
       Payment.update(req.body, { where: { id: idPayment } }).then(result => {
         if (result > 0) {
