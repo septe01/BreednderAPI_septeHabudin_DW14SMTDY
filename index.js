@@ -67,7 +67,7 @@ app.group("/api/v1", router => {
 // --- create the homepage route
 app.get("/", (req, res) => {
   //create route endpoind
-  res.send(authenticated);
+  res.send("hello septe");
 });
 
 app.listen(port);
