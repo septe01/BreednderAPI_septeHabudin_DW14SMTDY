@@ -55,6 +55,7 @@ app.group("/api/v1", router => {
   router.get("/match", authenticated, MatchController.show);
   router.get("/matches", authenticated, MatchController.matchTrue);
   router.post("/match", authenticated, MatchController.store);
+  router.post("/match", authenticated, MatchController.autoTrue);
   router.patch("/match/:id", authenticated, MatchController.update);
 });
 
