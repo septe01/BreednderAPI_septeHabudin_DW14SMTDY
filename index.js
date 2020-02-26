@@ -12,8 +12,8 @@ const { authenticated } = require("./middleware/auth");
 const app = express();
 
 // define the server port
-// const port = 5001;
-const port = process.env.PORT || 4000;
+const port = 5001;
+// const port = process.env.PORT || 4000;
 
 // allow this app to receive incoming json request
 app.use(bodyParser.json());
@@ -36,6 +36,7 @@ app.group("/api/v1", router => {
   router.post("/register", RegistrasiController.store);
   // user
   router.get("/user", authenticated, UserController.index);
+  router.post("/user", authenticated, UserController.store);
   router.get("/user/:id", authenticated, UserController.show);
   router.patch("/user/:id", authenticated, UserController.update);
   router.delete("/user/:id", UserController.destroy);

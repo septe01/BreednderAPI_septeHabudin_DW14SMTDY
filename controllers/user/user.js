@@ -66,6 +66,51 @@ exports.update = (req, res) => {
 };
 // !--- end update data user
 
+// --- store data
+exports.store = async (req, res) => {
+  try {
+    let stts = "";
+    req.body.status == null ? (stts = "") : (stts = "admin");
+
+    const data = {
+      breeder: req.body.breeder,
+      email: req.body.email,
+      password: req.body.password,
+      phone: req.body.phone,
+      address: req.body.address,
+      role: stts
+    };
+    const findEmail = await User.findOne({ where: { email: req.body.email } });
+    if (!findEmail) {
+      const result = await User.create(data);
+      res.send(result);
+      if (result) {
+        res.status(200).send({
+          status: 200,
+          message: "success",
+          result
+        });
+      } else {
+        res.status(204).send({
+          status: 204,
+          message: "not content"
+        });
+      }
+    } else {
+      res.status(201).send({
+        status: 201,
+        message: "email is already in use"
+      });
+    }
+  } catch (error) {
+    res.status(400).send({
+      status: 400,
+      message: "Bad Request"
+    });
+  }
+};
+// !--- end store data user
+
 // --- delete data user
 exports.destroy = (req, res) => {
   const id = req.params.id;
