@@ -31,7 +31,7 @@ module.exports = {
           gender: "female",
           about_pet: "he was very excited",
           photo: "i.imgur.com/6kD5rw3.jpg",
-          user_id: 3,
+          user_id: 2,
           spesies_id: 2,
           age_id: 3,
           createdAt: "0000-00-00",
@@ -43,7 +43,18 @@ module.exports = {
           about_pet: "he was very excited",
           photo: "i.imgur.com/a0cNgtL.jpg",
           user_id: 3,
-          spesies_id: 3,
+          spesies_id: 1,
+          age_id: 3,
+          createdAt: "0000-00-00",
+          updatedAt: "0000-00-00"
+        },
+        {
+          name: "faizals",
+          gender: "male",
+          about_pet: "he was very excited",
+          photo: "i.imgur.com/a0cNgtL.jpg",
+          user_id: 3,
+          spesies_id: 2,
           age_id: 2,
           createdAt: "0000-00-00",
           updatedAt: "0000-00-00"
