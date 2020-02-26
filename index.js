@@ -22,6 +22,7 @@ app.use(bodyParser.json());
 const LoginController = require("./controllers/login");
 const RegistrasiController = require("./controllers/register/register");
 const SpeciesController = require("./controllers/species/spesies");
+const AgeController = require("./controllers/age/age");
 const PetController = require("./controllers/pet/pet");
 const UserController = require("./controllers/user/user");
 const PaymentController = require("./controllers/payment/payment");
@@ -41,6 +42,13 @@ app.group("/api/v1", router => {
   // species
   router.post("/species", SpeciesController.store);
   router.get("/species", SpeciesController.index);
+  router.patch("/species/:id", SpeciesController.update);
+  router.delete("/species/:id", SpeciesController.delete);
+  // Ages
+  router.post("/age", AgeController.store);
+  router.get("/age", AgeController.index);
+  router.patch("/age/:id", AgeController.update);
+  router.delete("/age/:id", AgeController.delete);
   //pet
   router.get("/pet", PetController.index);
   router.get("/pet/:id", PetController.show);

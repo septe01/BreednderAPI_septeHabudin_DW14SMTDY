@@ -24,25 +24,26 @@ module.exports = {
           role: "admin",
           createdAt: "0000-00-00",
           updatedAt: "0000-00-00"
-        },
-        {
-          breeder: "habudin",
-          email: "habudin@gmail.com",
-          password: "123456",
-          phone: "0812 1322 1235",
-          address: "Kp. Pabuaran No.26 Rt.03 Rw.953",
-          createdAt: "0000-00-00",
-          updatedAt: "0000-00-00"
-        },
-        {
-          breeder: "stia",
-          email: "stia@gmail.com",
-          password: "123456",
-          phone: "0812 1322 1235",
-          address: "Kp. Pabuaran No.26 Rt.03 Rw.953",
-          createdAt: "0000-00-00",
-          updatedAt: "0000-00-00"
         }
+        // ,
+        // {
+        //   breeder: "habudin",
+        //   email: "habudin@gmail.com",
+        //   password: "123456",
+        //   phone: "0812 1322 1235",
+        //   address: "Kp. Pabuaran No.26 Rt.03 Rw.953",
+        //   createdAt: "0000-00-00",
+        //   updatedAt: "0000-00-00"
+        // },
+        // {
+        //   breeder: "stia",
+        //   email: "stia@gmail.com",
+        //   password: "123456",
+        //   phone: "0812 1322 1235",
+        //   address: "Kp. Pabuaran No.26 Rt.03 Rw.953",
+        //   createdAt: "0000-00-00",
+        //   updatedAt: "0000-00-00"
+        // }
       ],
       {}
     );

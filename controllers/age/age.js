@@ -1,8 +1,8 @@
-const Species = require("../../models").spesies;
+const Ages = require("../../models").age;
 
 exports.index = async (req, res) => {
   try {
-    const getAll = await Species.findAll();
+    const getAll = await Ages.findAll();
     if (getAll.length > 0) {
       res.status(200).send({
         status: 200,
@@ -25,11 +25,11 @@ exports.index = async (req, res) => {
 
 exports.store = async (req, res) => {
   try {
-    const addSpecies = await Species.create(req.body);
+    const addAges = await Ages.create(req.body);
     res.status(200).send({
       status: 200,
       message: "success",
-      addSpecies
+      addAges
     });
   } catch (error) {
     res.status(400).send({
@@ -41,10 +41,10 @@ exports.store = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    let result = await Species.update(req.body, {
+    let result = await Ages.update(req.body, {
       where: { id: req.params.id }
     });
-    let resultUpdate = await Species.findOne({ where: { id: req.params.id } });
+    let resultUpdate = await Ages.findOne({ where: { id: req.params.id } });
     if (result) {
       res.status(200).send({
         status: 200,
@@ -62,7 +62,7 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let result = await Species.destroy({
+    let result = await Ages.destroy({
       where: { id: req.params.id }
     });
     if (result) {
