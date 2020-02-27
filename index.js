@@ -11,7 +11,7 @@ const { authenticated } = require("./middleware/auth");
 // use express in app variable
 const app = express();
 
-//corse
+//cors
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
@@ -46,6 +46,7 @@ app.group("/api/v1", router => {
   router.get("/user", authenticated, UserController.index);
   router.post("/user", authenticated, UserController.store);
   router.get("/user/:id", authenticated, UserController.show);
+  router.get("/userAuth", authenticated, UserController.userAuth);
   router.patch("/user/:id", authenticated, UserController.update);
   router.delete("/user/:id", UserController.destroy);
   // species

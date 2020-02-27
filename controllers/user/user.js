@@ -1,5 +1,29 @@
 const model = require("../../models");
 const User = model.user;
+const jwtDecode = require("jwt-decode");
+
+exports.userAuth = async (req, res) => {
+  try {
+    const token = req.headers.authorization;
+    const idUser = jwtDecode(token);
+    const userAut = await User.findOne({ where: { id: idUser.userId } });
+    if (userAut) {
+      res.status(200).send({
+        status: 200,
+        message: "success",
+        userAut
+      });
+    } else {
+      res.status(404).send({
+        status: 404,
+        message: "not found",
+        id: idUser
+      });
+    }
+  } catch (error) {
+    res.send(error);
+  }
+};
 
 // --- get data by id
 exports.show = (req, res) => {
