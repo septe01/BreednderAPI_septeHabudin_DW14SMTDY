@@ -11,6 +11,14 @@ const { authenticated } = require("./middleware/auth");
 // use express in app variable
 const app = express();
 
+//corse
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  res.header("Access-Control-Allow-Methods", "*");
+  next();
+});
+
 // define the server port
 // const port = 5001;
 const port = process.env.PORT || 4000;
