@@ -21,26 +21,32 @@ exports.store = (req, res) => {
   };
 
   Pet.create(data).then(result => {
-    res.send(result);
-    User.findOne({ where: { id: userId } }).then(userData => {
-      Spesies.findOne({ where: { id: spesiesId } }).then(spesiesData => {
-        Age.findOne({ where: { id: ageId } }).then(ageData => {
-          const resDataPet = {
-            id: resPet.id,
-            name: resPet.name,
-            ageData,
-            spesiesData,
-            about_pet: resPet.about_pet,
-            photo: resPet.photo,
-            userData
-          };
-          res.status(200).send({
-            status: 200,
-            message: "success",
-            resDataPet
-          });
-        });
-      });
+    User.findOne({
+      where: { id: userId },
+      attributes: ["breeder", "email", "phone", "address"]
+    }).then(userData => {
+      Spesies.findOne({ where: { id: spesiesId }, attributes: ["name"] }).then(
+        spesiesData => {
+          Age.findOne({ where: { id: ageId }, attributes: ["name"] }).then(
+            ageData => {
+              const data = {
+                id: result.id,
+                name: result.name,
+                ageData,
+                spesiesData,
+                about_pet: result.about_pet,
+                photo: result.photo,
+                userData
+              };
+              res.status(200).send({
+                status: 200,
+                message: "success",
+                data
+              });
+            }
+          );
+        }
+      );
     });
   });
 };
