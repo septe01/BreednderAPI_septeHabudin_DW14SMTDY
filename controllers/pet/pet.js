@@ -84,8 +84,18 @@ exports.index = (req, res) => {
 
 // --- update pet
 exports.update = (req, res) => {
+  const { name, gender, about_pet, photo } = req.body;
+  const dataUpdate = {
+    name,
+    gender,
+    about_pet,
+    photo,
+    user_id: req.user.userId,
+    spesies_id: req.body.spesies.id,
+    age_id: req.body.age.id
+  };
   const id = req.params.id;
-  Pet.update(req.body, { where: { id: id } }).then(dataPet => {
+  Pet.update(dataUpdate, { where: { id: id } }).then(dataPet => {
     Pet.findOne({
       where: { id: id },
       include: [
