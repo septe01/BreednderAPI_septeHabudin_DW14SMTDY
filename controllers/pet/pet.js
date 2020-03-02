@@ -164,3 +164,34 @@ exports.show = (req, res) => {
   });
 };
 // !--- end detail pet
+
+// --- get all pet user id
+exports.petbyUser = (req, res) => {
+  Pet.findAll({
+    where: { user_id: req.user.userId },
+    attributes: [
+      "id",
+      "name",
+      "gender",
+      "about_pet",
+      "photo",
+      "createdAt",
+      "updatedAt"
+    ],
+    include: [
+      { model: Spesies, attributes: ["name"] },
+      { model: Age, attributes: ["name"] },
+      { model: User, attributes: ["id", "breeder", "address", "phone"] }
+    ]
+  }).then(pets => {
+    if (pets) {
+      res.send(pets);
+    } else {
+      res.status(400).send({
+        error: true,
+        message: "not found"
+      });
+    }
+  });
+};
+// !--- end get all pet

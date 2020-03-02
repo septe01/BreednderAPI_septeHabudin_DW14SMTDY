@@ -63,6 +63,7 @@ app.group("/api/v1", router => {
   router.get("/pet", PetController.index);
   router.get("/pet/:id", PetController.show);
   router.post("/pet", authenticated, PetController.store);
+  router.get("/petuser", authenticated, PetController.petbyUser);
   router.patch("/pet/:id", authenticated, PetController.update);
   router.delete("/pet/:id", authenticated, PetController.destroy);
   //payment
